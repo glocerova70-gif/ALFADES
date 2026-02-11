@@ -1,16 +1,16 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from "../constants.ts";
 
+// Clave API autorizada para despliegue directo
+const API_KEY_DIRECT = "AIzaSyCf16lP4IDs6SOiWWMNY6tQSbvVeT1x51U";
+
 let chatSession: Chat | null = null;
 
 export const initializeChat = (): Chat => {
     if (chatSession) return chatSession;
 
-    const apiKey = process.env.API_KEY;
-    if (!apiKey) {
-        console.error("API_KEY is missing in environment variables.");
-        throw new Error("API Key configuration error.");
-    }
+    // Usamos la clave directa para asegurar compatibilidad total en entornos sin bundler
+    const apiKey = API_KEY_DIRECT;
 
     const ai = new GoogleGenAI({ apiKey });
     
@@ -41,6 +41,6 @@ export const sendMessageStream = async (
         }
     } catch (error) {
         console.error("Error communicating with Gemini:", error);
-        onChunk("Lo siento, tuve un problema de conexión. Por favor intenta de nuevo.");
+        onChunk("Lo siento, tuve un problema de conexión con el asistente de GLOCEROVA. Por favor intenta de nuevo.");
     }
 };
