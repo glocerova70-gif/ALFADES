@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Section } from './types';
-import SlideViewer from './components/SlideViewer';
-import ChatAssistant from './components/ChatAssistant';
+import { Section } from './types.ts';
+import SlideViewer from './components/SlideViewer.tsx';
+import ChatAssistant from './components/ChatAssistant.tsx';
 import { GraduationCap, Globe2 } from 'lucide-react';
 
 function App() {

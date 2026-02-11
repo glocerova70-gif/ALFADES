@@ -1,4 +1,4 @@
-import { SlideData, Section } from './types';
+import { SlideData, Section } from './types.ts';
 
 export const SLIDES: Record<Section, SlideData> = {
     [Section.HOME]: {

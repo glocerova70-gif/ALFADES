@@ -1,5 +1,5 @@
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { SYSTEM_INSTRUCTION } from "../constants";
+import { SYSTEM_INSTRUCTION } from "../constants.ts";
 
 let chatSession: Chat | null = null;
 
@@ -9,8 +9,6 @@ export const initializeChat = (): Chat => {
     const apiKey = process.env.API_KEY;
     if (!apiKey) {
         console.error("API_KEY is missing in environment variables.");
-        // We return a mock chat object if key is missing to prevent crash, 
-        // though in production strict handling is better.
         throw new Error("API Key configuration error.");
     }
 
