@@ -22,19 +22,25 @@ function App() {
             </div>
         </div>
 
-        <nav className="pointer-events-auto hidden md:flex items-center gap-8 bg-white/10 backdrop-blur-md px-8 py-3 rounded-full border border-white/10">
+        <nav className="pointer-events-auto hidden lg:flex items-center gap-6 bg-white/10 backdrop-blur-md px-8 py-3 rounded-full border border-white/10">
             {Object.keys(Section).map((key) => {
                 const section = key as Section;
                 const isActive = currentSection === section;
+                let label = '';
+                switch(section) {
+                    case Section.HOME: label = 'Inicio'; break;
+                    case Section.METHODOLOGY: label = 'Método'; break;
+                    case Section.SCIENCE: label = 'Ciencia'; break;
+                    case Section.IMPACT: label = 'Impacto'; break;
+                    case Section.JOIN_US: label = 'Únete'; break;
+                }
                 return (
                     <button
                         key={key}
                         onClick={() => setCurrentSection(section)}
-                        className={`text-sm font-medium transition-colors ${isActive ? 'text-glocerova-gold' : 'text-white hover:text-white/80'}`}
+                        className={`text-xs font-bold tracking-widest uppercase transition-colors ${isActive ? 'text-glocerova-gold' : 'text-white hover:text-white/80'}`}
                     >
-                        {section === Section.HOME ? 'Inicio' : 
-                         section === Section.METHODOLOGY ? 'Método' :
-                         section === Section.IMPACT ? 'Impacto' : 'Únete'}
+                        {label}
                     </button>
                 );
             })}
@@ -42,7 +48,7 @@ function App() {
 
         <div className="pointer-events-auto flex items-center gap-2 text-white/80 text-sm font-medium border-l border-white/20 pl-6">
             <Globe2 size={16} />
-            <span className="hidden sm:inline">CO / INT</span>
+            <span className="hidden sm:inline">COLOMBIA</span>
         </div>
       </header>
 

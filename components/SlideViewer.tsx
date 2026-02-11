@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, ArrowRight, Download } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight, Download, BookOpen, ExternalLink } from 'lucide-react';
 import { SLIDES } from '../constants.ts';
 import { Section } from '../types.ts';
 
@@ -35,58 +35,86 @@ const SlideViewer: React.FC<SlideViewerProps> = ({ currentSection, onSectionChan
             <div className="absolute inset-0 z-0">
                 {slide.videoUrl ? (
                     <video
+                        key={`v-${slide.id}`}
                         src={slide.videoUrl}
                         autoPlay
                         loop
                         muted
                         playsInline
-                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-out ${loaded ? 'scale-105' : 'scale-100'}`}
+                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[2500ms] ease-out ${loaded ? 'scale-105' : 'scale-110'}`}
                     />
                 ) : (
                     <div 
-                        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] ease-out ${loaded ? 'scale-105' : 'scale-100'}`}
+                        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[2500ms] ease-out ${loaded ? 'scale-105' : 'scale-110'}`}
                         style={{ backgroundImage: `url(${slide.imageUrl})` }}
                     />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-r from-glocerova-dark/90 via-glocerova-dark/70 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-glocerova-dark/95 via-glocerova-dark/60 to-transparent" />
             </div>
 
             <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 lg:px-32 max-w-7xl mx-auto">
-                <div className={`transition-all duration-700 ease-out transform ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="h-1 w-12 bg-glocerova-gold"></div>
-                        <span className="text-glocerova-gold font-bold tracking-widest text-sm md:text-base uppercase font-sans">{slide.subtitle}</span>
+                <div className={`transition-all duration-1000 ease-out transform ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="h-[2px] w-12 bg-glocerova-gold"></div>
+                        <span className="text-glocerova-gold font-bold tracking-[0.2em] text-xs md:text-sm uppercase font-sans">{slide.subtitle}</span>
                     </div>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-8 leading-tight">{slide.title}</h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-light">{slide.description}</p>
-                    <div className="flex flex-wrap gap-4">
-                        <button onClick={handleNext} className="group flex items-center gap-4 bg-white text-glocerova-dark px-8 py-4 rounded-full font-bold hover:bg-glocerova-gold transition-colors duration-300">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-8 leading-[1.1]">{slide.title}</h1>
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl mb-12 leading-relaxed font-light">
+                        {slide.description}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-5">
+                        <button onClick={handleNext} className="group flex items-center gap-4 bg-white text-glocerova-dark px-10 py-5 rounded-full font-bold hover:bg-glocerova-gold transition-all duration-500 shadow-xl hover:shadow-glocerova-gold/20">
                             {slide.ctaText}
-                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                            <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                         </button>
+                        
+                        {slide.researchLinks && (
+                            <div className="flex gap-4">
+                                {slide.researchLinks.map((res, i) => (
+                                    <button key={i} className="flex items-center gap-2 bg-white/5 border border-white/20 text-white px-6 py-5 rounded-full text-sm font-semibold hover:bg-white/10 backdrop-blur-sm transition-all">
+                                        <BookOpen size={18} className="text-glocerova-gold" />
+                                        {res.title}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
                         {slide.secondaryCta && (
-                            <a href={slide.secondaryCta.link} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all duration-300 backdrop-blur-sm">
+                            <a href={slide.secondaryCta.link} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 border border-white/40 text-white px-10 py-5 rounded-full font-bold hover:bg-white/10 transition-all duration-500 backdrop-blur-sm">
                                 {slide.secondaryCta.text}
-                                <Download size={20} />
+                                <Download size={20} className="group-hover:translate-y-1 transition-transform" />
                             </a>
                         )}
                     </div>
                 </div>
             </div>
 
+            {/* Navigation Controls */}
             <div className="absolute bottom-12 right-8 md:right-20 flex gap-4 z-20">
-                <button onClick={handlePrev} className="p-4 rounded-full border border-white/20 text-white hover:bg-white/10 backdrop-blur-sm transition-all"><ChevronLeft size={24} /></button>
-                <button onClick={handleNext} className="p-4 rounded-full bg-white text-glocerova-dark hover:bg-glocerova-gold transition-all shadow-lg"><ChevronRight size={24} /></button>
+                <button onClick={handlePrev} className="group p-5 rounded-full border border-white/10 text-white hover:bg-white hover:text-glocerova-dark backdrop-blur-md transition-all duration-500">
+                    <ChevronLeft size={24} />
+                </button>
+                <button onClick={handleNext} className="group p-5 rounded-full bg-white text-glocerova-dark hover:bg-glocerova-gold transition-all duration-500 shadow-2xl">
+                    <ChevronRight size={24} />
+                </button>
             </div>
 
-            <div className="absolute bottom-12 left-8 md:left-20 flex gap-3 z-20">
-                {sections.map((s) => (
-                    <button key={s} onClick={() => onSectionChange(s)} className={`h-1.5 transition-all duration-300 rounded-full ${s === currentSection ? 'w-12 bg-glocerova-gold' : 'w-6 bg-white/30 hover:bg-white/50'}`} />
-                ))}
+            <div className="absolute bottom-12 left-8 md:left-20 flex items-center gap-4 z-20">
+                <div className="flex gap-2">
+                    {sections.map((s, idx) => (
+                        <button 
+                            key={s} 
+                            onClick={() => onSectionChange(s)} 
+                            className={`h-1 transition-all duration-700 rounded-full ${s === currentSection ? 'w-16 bg-glocerova-gold' : 'w-4 bg-white/20 hover:bg-white/40'}`} 
+                        />
+                    ))}
+                </div>
+                <span className="text-white/40 font-mono text-xs tracking-tighter ml-4">EXPLORAR GLOCEROVA</span>
             </div>
             
-            <div className="absolute top-12 right-8 md:right-20 text-white/40 font-mono text-xl z-20">
-                0{slide.id} <span className="text-white/20 mx-2">/</span> 04
+            <div className="absolute top-12 right-8 md:right-20 text-white/20 font-mono text-4xl font-black z-20 select-none">
+                0{slide.id} <span className="text-[10px] align-top mt-2 inline-block font-bold">/ 05</span>
             </div>
         </div>
     );
