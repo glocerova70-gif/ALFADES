@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Section } from './types.ts';
 import SlideViewer from './components/SlideViewer.tsx';
 import ChatAssistant from './components/ChatAssistant.tsx';
+import VoiceAgent from './components/VoiceAgent.tsx';
 import { GraduationCap, Globe2 } from 'lucide-react';
 
 function App() {
@@ -59,6 +60,9 @@ function App() {
             onSectionChange={setCurrentSection} 
         />
       </main>
+
+      {/* Voice Call Agent */}
+      <VoiceAgent />
 
       {/* AI Assistant */}
       <ChatAssistant />
